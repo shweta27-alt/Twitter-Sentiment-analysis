@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://kit.fontawesome.com/76fc1e3fb8.js" crossorigin="anonymous"></script>
+        <title>Sentiment Analysis</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+body{
+ font-family: 'Montserrat', sans-serif;
+color:white;
+background: rgb(53,100,128);
+background: linear-gradient(90deg, rgba(53,100,128,1) 0%, rgba(44,110,144,1) 44%, rgba(53,99,123,1) 100%);
+}
+.top {
+  overflow: hidden;
+background:#454545;
+
+}
+
+.top a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 22px 22px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.top a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+
+
+h1{
+  font-size:4rem;
+  font-weight:bold;
+  
+position:center;
+}
+h2{
+  font-size:2.5rem;
+   margin:40px;
+}
+
+
+p{
+  margin:5px;
+  font-size: 1.5vw;
+text-color:black;
+
+}
+form{
+  background:#babfc2;
+  opacity:0.9;
+  margin:25px;
+  width:90%;
+  height:33vw;
+  postion:absolute;
+  font-size: 1.2vw;
+  color:black;
+  border: 0.5px solid #1c1b1c;
+  border-radius:15px;
+    }
+
+label{
+  font size:1.5vw;
+}
+
+input#text{
+  width: 50%;
+  border: 3px solid #cccccc;
+  border radius: 20px;
+  display:inline-block
+  right:400px;
+  font-family: Tahoma, sans-serif;
+  font-size:1rem;
+  display:inline-block;
+  height:45px;
+  }
+
+  input#text1{
+  width: 50%;
+  border: 3px solid #cccccc;
+  border radius: 20px;
+  display:inline-block
+  right:400px;
+  font-family: Tahoma, sans-serif;
+  font-size:1rem;
+  display:inline-block;
+  height:45px;
+  }
+
+
+form#button {
+  margin:65px;
+  border: none;
+  text-align: center;
+  font-size: 1.4vw;
+  cursor: pointer;
+}
+
+h1{
+font-size: 70px;
+text-align: center;
+margin:30px;
+}
+h2{
+font-size: 30px;
+text-align:center;
+margin:30px;
+}
+.row {
+  position:block;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.tweet{
+margin-top: 8px;
+position:inline-block;
+float:left;
+width:60%;
+height:50%;
+}
+.tweet_text{
+  position:inline-block;
+  float:right;
+  width:40%;
+  height:50%;
+}
+
+.column {
+  display: flex;
+  flex-wrap: wrap;
+  }
+
+.tweets{
+margin-top: 8px;
+display:inline-block;
+ float:right;
+ width:60%;
+height:50%;
+}
+.tweets_text{
+ display:inline-block;
+float:left;
+width:40%;
+height:50%;
+}
+
+.end {
+  padding: 80px;
+  text-align: center;
+  background:#454545;
+  color: white;
+}
+Table{
+  text-align: center;
+  color: white;
+}
+a{
+color:white;
+text-align: center;
+}
+}
+.pic{
+height: 400px;
+ width: 500px;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+    }
+.head{
+ height: 400px;
+ width: 500px;
+}
+
+}
+</style>
+</head>
+<body>
+
+
+    <nav class="top" style="width:100%">
+
+        <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Sign in/out
+          </a>
+          <ul class="dropdown-menu" style="background-color: #454545;">
+            <li><a class="dropdown-item" href="/" >Sign in/up</a></li>
+            <li><a class="dropdown-item"  href="/">Sign out</a></li>
+          </ul>
+
+       <a  href="/about">about us</a>
+       <a  href="/blog">Blog</a>
+      <a  href="/emotion">Emotion</a>
+      <a  href="/home">Tweets</a>
+
+    </nav>
+
+    <br>
+    <br>
+    <br>
+    <br>
+        <center>
+      <h1>Twitter Sentiment Analysis</h1>
+     </center>
+      <h2><b>Analyze the emotions your tweets carry!!!</b></h2>
+      <br>
+      <br>
+      <br>
+
+    <ul><ul><ul><ul>
+ <div class="head">
+    <form action="{{ url_for('second.sentiment_logic')}}"  method="post" onsubmit="return validateForm()">
+        <br>
+        <center><p><strong>Enter the keywords for and numbers of tweets you want to search sentiment for here.....</strong></p></center>
+        <br>
+       <center><label><strong>Enter your search Keywords</strong></label></center>
+      <center><input type="text" name="keyword" id="text" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')"  placeholder="Enter texts here" spellcheck="true"></center>
+      <br>
+      <br>
+      <br>
+        <center><label><strong>Enter the number of tweets to analyze</strong></label></center>
+        <center><input type="number" name="tweets" id="text1" onfocus="this.value=''; setbg('#e5fff3');" onblur="setbg('white')"  placeholder="Enter numbers here" spellcheck="true"></center>
+        <br>
+        <center><button id="button" onclick="submit" type="submit" style="background-color: #2a736c; border-radius: 5px;color: #FFFFFF;font-size: 1.4vw;padding: 5px 5px;width: 18%;">Check Sentiment!</button></center>
+        </form>
+ </div>
+</ul></ul></ul></ul>
+ <br>
+<br>
+   # For showing output on html page
+    {% if polarity %}
+    <div style="text-align: center;">
+        <div >
+    <h3 style="color: white; text-align: center;font-size:30px; border-radius: 25px; background: rgb(66,94,120);">How are people reacting on <em>"{{keyword}}"</em> by analyzing <em>"{{tweets}}"</em> Tweets</h3>
+    {% endif %}
+        </div>
+    </div>
+<!--parent div for reports-->
+
+    <!--General sentiment report-->
+    <div class="mt-100">
+        {% if polarity %}
+        <h1 style="color: white; text-align: center;font-size:40px"><u>General Report</u></h1>
+        <div   style="height:70px">
+
+            <h1 style="color: white; text-align: center;font-size:30px"> The Average Sentiment is "{{htmlpolarity}}" </h1>
+            {%endif%}
+        </div>
+    </div>
+        </div>
+    <!--end of general report-->
+     <!--start of polarity value-->
+    {% if polarity %}
+    <div class="row" style="width:100%">
+    <div class="mt-100">
+        <h1 style="color: white; text-align: center;font-size:40px"><u>Sentiment Polarity</u></h1>
+        <div   style="height:80px">
+
+           <h1 style="text-align: center;font-size:30px"> The sentiment polarity is "{{polarity}}" </h1>
+
+        </div>
+    </div>
+    </div>
+     {%endif%}
+     <!--end of polarity value-->
+</div>
+<!-- end of parent div for reports-->
+    </div>
+
+    {% if polarity %}
+<div style="margin-top: 50px">
+
+    <h1 style="color: white; text-align: center;font-size:40px"><u>Detailed Report</u></h1>
+    <div  role="alert" style="height:200px">
+
+        <h2 class="report-text"> {{positive}} % people thought it was "Positive"</h2>
+        <h2 class="report-text"> {{neutral}} % people thought it was "Neutral"</h2>
+        <h2 class="report-text"> {{negative}} % people thought it was "Negative"</h2>
+
+    </div>
+</div>
+
+<!--end of report-->
+<center><a href="/Pie" class="button" style="background-color: #2a736c; border-radius: 5px;color: #FFFFFF;font-size: 1.4vw;padding: 5px 5px; width:16%"> Generate Visualization</a></center>
+    {%endif%}
+<br>
+<br>
+
+        <br>
+        <br><br>
+        <center>
+      <h2>Why you should use this sentiment analysis platform.....</h2>
+     </center>
+      <br>
+      <br>
+      
+
+    <div class="info">
+        <div class="container">
+           <br><br><br>
+            <div class="row">
+                <div class="tweet_text">
+                    <br>
+                    <ul>
+                        <li>Upselling opportunities - Happy customers are more likely to be receptive to upselling. With sentiment analysis, you can easily identify your happiest customers.</li>
+                        <li>racking overall customer satisfaction -
+                            Sentiment analysis scoring puts a quantifiable number on customer satisfaction.
+                            It enables you to see the impressions and moods of customers when they approach you, before they get support, and how effective your service is at increasing satisfaction.
+                            In other words, you get the bigger picture, rather than just a case-by-case view.</li>
+                     </ul>
+                </div>
+                <div class="tweet">
+                    <img src="/static/images/tweet1.png" style="height=100%; width:100%">
+                </div>
+            </div>
+            <br><br><br><br>
+            <div class="column">
+                <div class="tweets">
+                    <img src="/static/images/tweet2.png" style="height=100%; width:100%">
+                </div>
+                <div class="tweets_text">
+                    <br><br>
+                    <ul>
+                        <li>Can help you get the review related to todays world and opinions on trending topics.</li>
+                        <li>that can be covid situation, work from home topic, bitcoin and so on.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br>
+        <div class="end" width="100%">
+          <center><table cellpadding="10px">
+          <tr>
+          <th><a href="/home">Tweet</a></th>
+          <th><a href="/emotion">Emotion</a></th>
+          <th><a href="/blog">Blog</a></th>
+          <th><a href="/about">About us</a></th>
+          <th><a href="/">Sign up/in</a></th>
+          </tr>
+          </table>
+          <br>
+          <a href="https://www.facebook.com/profile.php?id=100071669678890"><i class="fab fa-facebook-square"></i></a>
+          <a href="https://twitter.com/MouryaChandani"><i class="fab fa-twitter-square"></i></a>
+          <a href="https://www.instagram.com/_chandani7021/"><i class="fab fa-instagram"></i></a>
+          </center>
+        </div>
+    </div>
+
+
+
+<script>
+function validateForm() {
+  let x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+  alert("Name must be filled out");
+  return false;
+  }
+}
+
+		
+</script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+</body>
+</html>

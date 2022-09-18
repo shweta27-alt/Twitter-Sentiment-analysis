@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://kit.fontawesome.com/76fc1e3fb8.js" crossorigin="anonymous"></script>
+        <title>Sentiment Analysis</title>
+<style>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+body{
+ margin: 0;
+ font-family: 'Montserrat', sans-serif;
+color:white;
+background: rgb(53,100,128);
+background: linear-gradient(90deg, rgba(53,100,128,1) 0%, rgba(44,110,144,1) 44%, rgba(53,99,123,1) 100%);
+}
+.top {
+  overflow: hidden;
+background:#454545;
+
+}
+
+.top a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 22px 22px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.top a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+
+h1{
+  font-size:4rem;
+  font-weight:bold;
+  
+position:center;
+}
+h2{
+  font-size:2.5rem;
+   margin:40px;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+p{
+  margin:5px;
+  font-size: 1.5vw;
+text-color:black;
+
+}
+form{
+  background:#babfc2;
+  opacity:0.9;
+  margin:25px;
+  width:95%;
+  height:20vw;
+  postion:absolute;
+  font-size: 1.2vw;
+  color:black;
+  border: 0.5px solid #1c1b1c;
+  border-radius:15px;
+    }
+
+label{
+  font size:1.5vw;
+}
+
+input#text{
+  width: 50%;
+  border: 3px solid #cccccc;
+  border radius: 20px;
+  display:inline-block;
+  right:400px;
+  font-family: Tahoma, sans-serif;
+  font-size:1rem;
+  display:inline-block;
+  height:45px;
+  }
+
+
+
+head#button{
+  margin:65px;
+  text-align: center;
+  display:inline-block;
+  cursor: pointer;
+}
+
+h1{
+font-size: 70px;
+text-align: center;
+margin:30px;
+}
+h2{
+font-size: 30px;
+text-align:center;
+margin:30px;
+}
+
+
+.end {
+  padding: 80px;
+  text-align: center;
+  background:#454545;
+  color: white;
+}
+Table{
+  text-align: center;
+  color: white;
+}
+a{
+color:white;
+text-align: center;
+}
+}
+
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+    }
+.head{
+ height: 400px;
+ width: 500px;
+}
+
+}
+</style>
+</head>
+<body>
+
+
+    <nav class="top">
+
+        <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Sign in/out
+          </a>
+          <ul class="dropdown-menu" style="background-color: #454545;">
+            <li><a class="dropdown-item" href="/" >Sign in/up</a></li>
+            <li><a class="dropdown-item"  href="/">Sign out</a></li>
+          </ul>
+
+       <a  href="/about">about us</a>
+       <a  href="/blog">Blog</a>
+      <a  href="/emotion">Emotion</a>
+      <a  href="/home">Tweets</a>
+
+    </nav>
+
+
+    <br>
+    <br> <center>
+      <h1>Emotion Sentiment Analysis</h1>
+      <h2>Know what emotion your Text carry!!!!</h2>
+     
+<img src="/static/images/emotionimg.png" alt="Emotion" style="width:50%;"class="center"></center>
+   <br>
+   <br>
+   <br>
+    <br>
+    <form name="myForm" action="{{ url_for('emotionanalysis')}}" onsubmit="return validateForm()" method="post" class="for">
+    <div class="head">
+   <br>
+        <center><p><strong>Enter the texts you want to search sentiment for here.....</strong></p></center>
+        <br>
+       <center><label><strong>Enter the text</strong></label></center>
+      <center><input type="text" name="emo_text" id="text" onfocus="this.value=''" onblur="setbg('white')"   placeholder="Enter texts here" spellcheck="true" required="required" width="200px"></center>
+      <br>
+      <center><button id="button" onclick="submit" type="submit" style="background-color: #2a736c; border-radius: 5px;color: #FFFFFF;font-size: 1.4vw;padding: 5px 5px;
+  width: 18%;">Check Sentiment!</button></center>
+      <br>
+    </div></form>
+
+    <br>
+    <br><br><br>
+     <div class="output" style="text-align: center;font-size:50px">{{prediction}}</div>
+    <br>
+    <br><br><br><br>
+
+  <div class="end" width="100%">
+          <center><table cellpadding="10px">
+          <tr>
+          <th><a href="/home">Tweet</a></th>
+          <th><a href="/emotion">Emotion</a></th>
+          <th><a href="/blog">Blog</a></th>
+          <th><a href="/about">About us</a></th>
+          <th><a href="/">Sign up/in</a></th>
+          </tr>
+          </table>
+          <br>
+          <a href="https://www.facebook.com/profile.php?id=100071669678890"><i class="fab fa-facebook-square"></i></a>
+          <a href="https://twitter.com/MouryaChandani"><i class="fab fa-twitter-square"></i></a>
+          <a href="https://www.instagram.com/_chandani7021/"><i class="fab fa-instagram"></i></a>
+          </center>
+        </div>
+    </div>
+
+
+<script>
+function validateForm() {
+  let x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+  alert("Name must be filled out");
+  return false;
+  }
+}
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
+</html>

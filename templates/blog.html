@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Bootstrap CSS -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://kit.fontawesome.com/76fc1e3fb8.js" crossorigin="anonymous"></script>
+    <title>Sentiment Analysis</title>
+<style>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+body{
+ margin: 0;
+ font-family: 'Montserrat', sans-serif;
+color:white;
+background: rgb(53,100,128);
+background: linear-gradient(90deg, rgba(53,100,128,1) 0%, rgba(44,110,144,1) 44%, rgba(53,99,123,1) 100%);
+}
+.top {
+  overflow: hidden;
+background:#454545;
+
+}
+
+.top a {
+  float: right;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 22px 22px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.top a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.image{
+ background-image: url("/static/images/blog.jpg");
+  background-repear:no repeat;
+  background-size:100% 100%;
+  opacity:0.8;
+  margin:25px;
+  width:80%;
+  height:29vw;
+  postion:absolute;
+  text-align:left;
+  border: 0.5px solid #1c1b1c;
+  border-radius:15px;
+    }
+
+.blog{
+  
+  padding: 80px;
+  width :80%;
+  padding: 0 4px;
+  color:white;
+}
+.end {
+  padding: 80px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+Table{
+  text-align: center;
+  color: white;
+}
+a{
+color:white;
+text-align: center;
+}
+p{
+padding:10px;
+
+}
+.h1{
+line-height: 0.7;
+}
+.h2{
+line-height: 0.7;
+}
+li {
+ padding:16px;
+  text-align: center;
+ text-decoration: none;
+}
+
+
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+
+
+
+
+  <body>
+
+     <nav class="top">
+
+        <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           Sign in/out
+          </a>
+          <ul class="dropdown-menu" style="background-color: #454545;">
+            <li><a class="dropdown-item" href="/" >Sign in/up</a></li>
+            <li><a class="dropdown-item"  href="/">Sign out</a></li>
+          </ul>
+
+       <a  href="/about">about us</a>
+       <a  href="/blog">Blog</a>
+      <a  href="/emotion">Emotion</a>
+      <a  href="/home">Tweets</a>
+
+    </nav>
+
+
+      <br><br><br><br>
+
+    <ul><ul><ul><ul><ul><ul><ul>
+        <div class="image">
+        </div>
+    </ul></ul></ul></ul></ul></ul></ul>
+    <br><br><br><br><br>
+
+    <ul><ul><ul><ul><ul><ul><ul>
+        <div class = "blog">
+            <center><h1>Sentiment Analysis</h1></center>
+            <br><br>
+            <h2>What is sentiment analysis ??</h2>
+            <p>Sentiment analysis is the process of using natural language processing, text analysis, and statistics to analyze customer sentiment. <br>The best businesses understand the sentiment of their customers—what people are saying, how they’re saying it, and what they mean.<br> Customer sentiment can be found in tweets, comments, reviews, or other places where people mention your brand. Sentiment Analysis<br> is the domain of understanding these emotions with software, and it’s a must-understand for developers and business leaders in a modern workplace.
+                <br>As with many other fields, advances in deep learning have brought sentiment analysis into the foreground of cutting-edge algorithms.<br> Today we use natural language processing, statistics, and text analysis to extract, and identify the sentiment of words into positive, negative,<br> or neutral categories.</p>
+                <br>
+             <h2>How does Sentiment Analysis work</h2>
+            <p>Basic sentiment analysis of text documents follows a straightforward process:
+                <br>1.Break each text document down into its component parts (sentences, phrases, tokens and parts of speech)
+                <br>2.Identify each sentiment-bearing phrase and component
+                <br>3.Assign a sentiment score to each phrase and component (-1 to +1)
+                <br>4.Optional: Combine scores for multi-layered sentiment analysis</p>
+
+            <p>As you’ll see, the underlying technology is very complicated. But for a simple explanation of sentiment analysis, <br>consider these sentences:</p>
+
+            <br>
+               1.Terrible pitching and awful hitting led to another crushing loss.
+            <br>
+                2.Bad pitching and mediocre hitting cost us another close game.
+
+
+                <p>Both sentences discuss a similar subject, the loss of a baseball game. But you, the human reading them, can clearly see <br>that first sentence’s tone is much more negative.</p>
+                <p>Your brain figures this out by looking for and interpreting sentiment-bearing phrases – that is, words and phrases that <br>carry a tone or opinion. These usually appear as adjective-noun combinations. In the examples above,<br> the sentiment-bearing phrases are:</p>
+            <ul type="invisible">
+             <li>Terrible pitching | awful hitting | crushing loss</li>
+                <li>Bad pitching | mediocre hitting | close game</li>
+    
+            </ul>
+
+            <p>You have encountered words like these many thousands of times over your lifetime across a range of contexts.<br> And from these experiences, you’ve learned to understand the strength of each adjective, receiving input and feedback along the way from teachers and peers.</p>
+
+            <p>When you read the sentences above, your brain draws on your accumulated knowledge to identify each sentiment-bearing <br>phrase and interpret their negativity or positivity. Usually this happens subconsciously. For example, you instinctively know that a game <br>that ends in a “crushing loss” has a higher score differential than the “close game”, because you understand that “crushing” <br>is a stronger adjective than “close”.</p>
+
+            <p>So, why are we using baseball games to explain how human brains do sentiment analysis? <br>The answer is simple: computer sentiment analysis works (almost) the same way.</p>
+              <br>
+                <h2>Uses of sentiment analysis</h2>
+              <br>
+              <h3>Sentiment analysis for brand </h3>
+            <p>One of the most well documented uses of sentiment analysis is to get a full 360 view of how your brand, product,<br> or company is viewed by your customers and stakeholders. Widely available media, like product reviews and social, can reveal <br>key insights about what your business is doing right or wrong. Companies can also use sentiment analysis to measure the impact of a new product,<br> ad campaign, or consumer’s response to recent company news on social media. Private companies like Unamo offer this as a service.</p>
+
+            <h3>Sentiment analysis for customer service</h3>
+            <p>Customer service agents often use sentiment or intent analysis to automatically sort incoming user email into “urgent”<br> or “not urgent” buckets based on the sentiment of the email, proactively identifying frustrated users. The agent then directs<br> their time toward resolving the users with the most urgent needs first. As customer service becomes more and more automated through machine learning,<br> understanding the sentiment and intent of a given case becomes increasingly important.</p>
+
+              <h3>Sentiment analysis for market research and analysis</h3>
+            <p>Sentiment analysis is used in business intelligence to understand the subjective reasons why consumers are <br>or are not responding to something (e.x. why are consumers buying a product? What do they think of the user experience? Did customer <br>service support meet their expectations?). Sentiment analysis can also be used in the areas of political science, sociology, and psychology to<br> analyze trends, ideological bias, opinions, gauge reactions, etc.</p>
+                <h2>The challenges of Sentiment analysis</h2>
+              <p>Sentiment analysis runs into a similar set of problems as emotion recognition does – before deciding what the<br> sentiment of a given sentence is, we need to figure out what “sentiment” is in the first place. Is it categorical, and sentiment<br> can be split into clear buckets like happy, sad, angry, or bored? Or is it dimensional, and sentiment needs to be evaluated on some sort of<br> bi-directional spectrum?</p>
+
+            <p>In addition to the definition problem, there are multiple layers of meaning in any human-generated sentence. <br>People express opinions in complex ways; rhetorical devices like sarcasm, irony, and implied meaning can mislead sentiment analysis. <br>The only way to really understand these devices are through context: knowing how a paragraph is started can strongly <br>impact the sentiment of later internal sentences.</p>
+
+            <p>Most of the current thinking in sentiment analysis happens in a categorical framework:<br> sentiment is analyzed as belonging to a certain bucket, to a certain degree. For example, a given sentence may be 45% happy, 23% sad,<br> 89% excited, and 55% hopeful. These numbers don’t add up to 100 – <br>they’re individual indications of how “X” a sentence’s sentiment is.</p>
+            </div></ul></ul></ul></ul></ul></ul></ul>
+
+
+<br>
+<br>
+<br>
+
+<div class="end" width="100%">
+          <center><table cellpadding="10px">
+          <tr>
+          <th><a href="/home">Tweet</a></th>
+          <th><a href="/emotion">Emotion</a></th>
+          <th><a href="/blog">Blog</a></th>
+          <th><a href="/about">About us</a></th>
+          <th><a href="/">Sign up/in</a></th>
+          </tr>
+          </table>
+          <br>
+          <a href="https://www.facebook.com/profile.php?id=100071669678890"><i class="fab fa-facebook-square"></i></a>
+          <a href="https://twitter.com/MouryaChandani"><i class="fab fa-twitter-square"></i></a>
+          <a href="https://www.instagram.com/_chandani7021/"><i class="fab fa-instagram"></i></a>
+          </center>
+        </div>
+    </div>
+
+    
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    </html>
